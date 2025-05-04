@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Open When App</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header>
+    <h1>Open When App</h1>
+    {% if session.user %}
+      <div class="nav">
+        <a href="{{ url_for('open_when') }}">Open When</a> |
+        <a href="{{ url_for('logout') }}">Logout</a>
+      </div>
+    {% endif %}
+  </header>
+  <main>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for cat, msg in messages %}
+            <li class="{{ cat }}">{{ msg }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

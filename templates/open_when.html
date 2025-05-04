@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Open When…</h2>
+  <div class="envelope-grid">
+    {% for key, env in envelopes.items() %}
+      <div class="env-card">
+        <a href="{{ url_for('envelope', name=key) }}">
+          <img src="{{ url_for('static', filename='css/envelope_icon.png') }}" alt="envelope icon">
+          <div class="title">{{ env.title }}</div>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

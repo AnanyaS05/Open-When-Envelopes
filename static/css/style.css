@@ -1,0 +1,36 @@
+body {
+    font-family: sans-serif;
+    text-align: center;
+    margin: 0; padding: 0;
+  }
+  header { background: #f0f0f0; padding: 1rem; }
+  .nav { margin-top: 0.5rem; }
+  .main { padding: 1rem; }
+  .button {
+    background: #007BFF; color: #fff; padding: 0.5rem 1rem;
+    text-decoration: none; border-radius: 4px;
+  }
+  .flashes { list-style: none; padding: 0; }
+  .flashes li { margin: 0.5rem; }
+  .error { color: red; }
+  
+  .envelope-grid {
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 2rem;
+    margin-top: 2rem;
+  }
+  .env-card { width: 150px; }
+  .env-card img { width: 100px; }
+  .env-card .title { margin-top: 0.5rem; }
+  
+  .envelope-animation {
+    width: 200px; height: 120px;
+    margin: 2rem auto;
+    background: url('../css/envelope_closed.png') no-repeat center/contain;
+  }
+  .envelope-animation.open-envelope {
+    animation: openEnv 1s forwards;
+  }
+  @keyframes openEnv {
+    to { background: url('../css/envelope_open.png') no-repeat center/contain; }
+  }
+  
