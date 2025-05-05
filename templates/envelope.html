@@ -4,13 +4,16 @@
   <div class="envelope-animation" id="anim">
     <!-- Simple CSS envelope opening; then show video -->
   </div>
-  <video id="videoPlayer" width="640" controls style="display:none;">
-    <source src="{{ url_for('static', filename='videos/' + video) }}" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+
+  <!-- Centering container added -->
+  <div class="video-container">
+    <video id="videoPlayer" width="640" controls style="display:none;">
+      <source src="{{ url_for('static', filename='videos/' + video) }}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
 
   <script>
-    // play the CSS animation, then show video
     const anim = document.getElementById("anim");
     const vid  = document.getElementById("videoPlayer");
 
@@ -24,7 +27,6 @@
       window.location.href = "{{ url_for('open_when') }}";
     });
 
-    // trigger reflow to restart animation
     window.onload = () => anim.classList.add("open-envelope");
   </script>
 {% endblock %}
