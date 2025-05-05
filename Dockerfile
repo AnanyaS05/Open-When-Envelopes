@@ -1,26 +1,31 @@
-# 1. Base image (explicit tag for reproducibility)
-FROM python:3.9-slim  # see: use explicit, deterministic tags :contentReference[oaicite:0]{index=0}
+# Use a Python 3.9 slim image
+FROM python:3.9-slim
 
-# 2. Environment variables
+# Set env vars for Python behavior
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1
 
-# 3. Create and switch to a non-root user for security
-RUN addgroup --system flaskgroup && adduser --system --group flaskuser
-USER flaskuser
+# Install system packages needed by mysqlclient
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+      build-essential \
+      python3-dev \
+      default-libmysqlclient-dev \
+      pkg-config && \
+    rm -rf /var/lib/apt/lists/*
 
-# 4. Set work directory
+# Set work directory
 WORKDIR /app
 
-# 5. Copy and install dependencies
-COPY --chown=flaskuser:flaskgroup requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt  # keeps image small :contentReference[oaicite:1]{index=1}
+# Copy and install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# 6. Copy application source
-COPY --chown=flaskuser:flaskgroup . .
+# Copy the rest of your application code
+COPY . .
 
-# 7. Expose the port your Flask app runs on
+# Expose the port your app runs on
 EXPOSE 8080
 
-# 8. Launch the app with Gunicorn (4 workers for concurrency)
+# Use Gunicorn for serving the app
 CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8080", "app:app"]
